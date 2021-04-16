@@ -1,56 +1,81 @@
-# Getting Started with Create React App Component Library
+# React-Tile-Layout
 
-This is a boilerplate for creating React component libraries using [Create React App](https://github.com/facebook/create-react-app) and [TypeScript](https://www.typescriptlang.org/).
+React-Tile-Layout is a grid layout for dynamically configurable tiles which is based on [React-Grid-Layout][https://npmjs.com/package/react-grid-layout]
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+Install the [React-Tile-Layout package](https://npmjs.com/package/react-tile-layout):
 
-### `npm start`
+```sh
+npm install react-grid-layout
+```
 
-Runs the local development app in the development mode.\
-This can be used for testing your components in the browser.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Include the following stylesheets in your application:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```txt
+/node_modules/react-grid-layout/css/styles.css
+/node_modules/react-resizable/css/styles.css
+```
 
-### `npm test`
+## Usage
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```tsx
+import React from "react";
+import { TileLayout, Tile, ReactTileLayout } from "react-tile-layout";
 
-### `npm run compile`
+const breakpoints = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 };
+const cols = { lg: 12, md: 10, sm: 8, xs: 6, xxs: 4 };
 
-Builds the library to the `dist` folder.
+export default function App() {
+  return (
+    <TileLayout
+      tileComponent={TileComponent}
+      breakpoints={breakpoints}
+      cols={cols}
+    >
+      <Tile name="Tile 1" layout={{ w: 2, h: 1, static: true }} />
+      <Tile name="Tile 2" layout={{ w: 2, h: 2, minW: 1, maxW: 2 }} />
+      <Tile name="Tile 3" layout={{ w: 1, h: 1 }} someProp="Hello" />
+      <Tile name="Tile 4" layout={{ w: 1, h: 1 }} disabled />
+    </TileLayout>
+  );
+}
 
-This script is also executed when running `npm publish` (using the [prepare](https://docs.npmjs.com/cli/v6/using-npm/scripts#life-cycle-scripts) life cycle script).
+const TileComponent = React.forwardRef(
+  (
+    {
+      name,
+      layoutSpec,
+      someProp,
+      children,
+      ...props
+    }: ReactTileLayout.TileComponentProps & {
+      someProp?: string;
+    },
+    ref: React.Ref<HTMLDivElement>
+  ) => {
+    return (
+      <div
+        {...props}
+        style={{
+          ...props.style,
+          border: "1px solid red",
+        }}
+        ref={ref}
+      >
+        {children}
+        {name} - {someProp || "default"}
+      </div>
+    );
+  }
+);
+```
 
-### `npm run eject`
+You can find a working example on [GitHub](https://github.com/hatsuo/react-tile-layout/blob/master/src/App.tsx).
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Simply clone the project and run the following commands:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-### `(npm run build)`
-
-Builds the local development app for production to the `build` folder.
-
-**You most certainly wont need to run this script at all.** Use the [compile](#npm-run-compile) script instead to prepare publishing your library.
-
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+npm install
+npm start
+```
