@@ -46,20 +46,21 @@ const TileComponent = React.forwardRef(
     {
       name,
       layoutSpec,
-      someProp,
+      props: { someProp },
       children,
-      ...props
-    }: ReactTileLayout.TileComponentProps & {
-      someProp?: string;
-    },
+      ...rest
+    }: ReactTileLayout.TileComponentProps,
     ref: React.Ref<HTMLDivElement>
   ) => {
     return (
       <div
-        {...props}
+        {...rest}
         style={{
-          ...props.style,
-          border: "1px solid red",
+          ...rest.style,
+          border:
+            layoutSpec.static || layoutSpec.isDraggable === false
+              ? "1px solid blue"
+              : "1px solid red",
         }}
         ref={ref}
       >

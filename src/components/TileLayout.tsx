@@ -310,11 +310,11 @@ const TileResolver = React.forwardRef(
 
     return (
       <Component
-        {...props}
         {...rest}
         ref={ref}
         name={name}
         layoutSpec={layout}
+        props={props}
       />
     );
   }

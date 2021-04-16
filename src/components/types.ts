@@ -29,8 +29,9 @@ export namespace ReactTileLayout {
     | NullableTileDefinition
     | ((previous: NullableTileDefinition) => NullableTileDefinition);
 
-  export type TileComponentProps = TileDefinitionProps & {
+  export type TileComponentProps = Dictionary<string, any> & {
     name: string;
     layoutSpec: TileLayout;
+    props: TileDefinitionProps;
   };
 }
