@@ -1,4 +1,4 @@
-import produce from "immer";
+import { produce } from "immer";
 import React from "react";
 import { Responsive } from "react-grid-layout";
 import { SizeMe } from "react-sizeme";
@@ -76,23 +76,21 @@ const TileLayout = React.memo(
     children,
     ...rest
   }: TileLayoutProps) => {
-    const [
-      { breakpoints, names, layout, definitions },
-      setState,
-    ] = React.useState<{
-      breakpoints: ReactTileLayout.Breakpoints;
-      names: string[];
-      layout: ReactGridLayout.Layouts;
-      definitions: ReactTileLayout.Dictionary<
-        string,
-        ReactTileLayout.TileDefinition
-      >;
-    }>(() => ({
-      breakpoints: initialBreakpoints,
-      names: [],
-      layout: initializeLayout(initialLayout || {}, initialBreakpoints),
-      definitions: {},
-    }));
+    const [{ breakpoints, names, layout, definitions }, setState] =
+      React.useState<{
+        breakpoints: ReactTileLayout.Breakpoints;
+        names: string[];
+        layout: ReactGridLayout.Layouts;
+        definitions: ReactTileLayout.Dictionary<
+          string,
+          ReactTileLayout.TileDefinition
+        >;
+      }>(() => ({
+        breakpoints: initialBreakpoints,
+        names: [],
+        layout: initializeLayout(initialLayout || {}, initialBreakpoints),
+        definitions: {},
+      }));
 
     const setTile = React.useCallback(
       (name: string, valueOrResolver: ReactTileLayout.TileValueOrResolver) => {
@@ -117,16 +115,8 @@ const TileLayout = React.memo(
               });
             } else {
               draft.definitions[name] = nextValue;
-              const {
-                override,
-                w,
-                h,
-                minW,
-                maxW,
-                minH,
-                maxH,
-                ...rest
-              } = nextValue.layout;
+              const { override, w, h, minW, maxW, minH, maxH, ...rest } =
+                nextValue.layout;
               const isStatic =
                 !isResizable || rest.static || rest.isResizable === false;
               const isOverriding = prevValue?.layout.override !== override;
