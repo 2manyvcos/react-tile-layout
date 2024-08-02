@@ -1,6 +1,6 @@
 # React-Tile-Layout
 
-React-Tile-Layout is a grid layout for dynamically configurable tiles which is based on [React-Grid-Layout][https://npmjs.com/package/react-grid-layout]
+React-Tile-Layout is a grid layout for dynamically configurable tiles which is based on [React-Grid-Layout](https://npmjs.com/package/react-grid-layout)
 
 ## Installation
 
