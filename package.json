@@ -10,6 +10,12 @@
     "type": "git",
     "url": "https://github.com/hatsuo/react-tile-layout"
   },
+  "dependencies": {
+    "@types/react-grid-layout": "^1.1.1",
+    "immer": "^8.0.1",
+    "react-grid-layout": "^1.2.4",
+    "react-sizeme": "^3.0.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
     "@babel/preset-env": "^7.13.15",

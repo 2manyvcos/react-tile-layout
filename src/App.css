@@ -39,3 +39,20 @@ body {
   margin: 32px 2px 2px 2px;
   padding: 20px;
 }
+
+.layout {
+  background: red;
+  margin: 10px;
+  border-radius: 10px;
+  box-sizing: content-box;
+}
+
+.layout > * {
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  border-radius: 7px;
+  padding: 5px;
+  text-align: center;
+  display: flex;
+  align-items: flex-start;
+}
