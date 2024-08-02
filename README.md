@@ -73,10 +73,3 @@ const TileComponent = React.forwardRef(
 ```
 
 You can find a working example on [GitHub](https://github.com/hatsuo/react-tile-layout/blob/master/src/App.tsx).
-
-Simply clone the project and run the following commands:
-
-```sh
-npm install
-npm start
-```
