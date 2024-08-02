@@ -117,19 +117,20 @@ const TileLayout = React.memo(
               });
             } else {
               draft.definitions[name] = nextValue;
+              const {
+                override,
+                w,
+                h,
+                minW,
+                maxW,
+                minH,
+                maxH,
+                ...rest
+              } = nextValue.layout;
+              const isStatic =
+                !isResizable || rest.static || rest.isResizable === false;
+              const isOverriding = prevValue?.layout.override !== override;
               Object.keys(draft.layout).forEach((key) => {
-                const {
-                  override,
-                  w,
-                  h,
-                  minW,
-                  maxW,
-                  minH,
-                  maxH,
-                  ...rest
-                } = nextValue.layout;
-                const isStatic =
-                  !isResizable || rest.static || rest.isResizable === false;
                 const index = draft.layout[key].findIndex(
                   (item) => item.i === name
                 );
@@ -150,18 +151,18 @@ const TileLayout = React.memo(
                   );
                 } else {
                   const prevItem = draft.layout[key][index];
-                  const overrideChanged =
-                    prevValue?.layout.override !== override;
                   const nextItem = normalizeLayoutItem({
                     i: prevItem.i,
                     x: prevItem.x,
                     y: prevItem.y,
                     w:
-                      prevValue?.layout.w !== w || overrideChanged
+                      (prevValue != null && prevValue.layout.w !== w) ||
+                      isOverriding
                         ? w
                         : prevItem.w,
                     h:
-                      prevValue?.layout.h !== h || overrideChanged
+                      (prevValue != null && prevValue.layout.h !== h) ||
+                      isOverriding
                         ? h
                         : prevItem.h,
                     minW: isStatic ? w : minW,
