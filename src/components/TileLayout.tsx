@@ -60,7 +60,6 @@ type TileLayoutProps = {
 } & {
   initialLayout?: ReactGridLayout.Layouts;
   onChangeLayout?: (layouts: ReactGridLayout.Layouts) => void;
-  onSaveLayout?: (layouts: ReactGridLayout.Layouts) => void;
   tileComponent: React.ComponentType<ReactTileLayout.TileComponentProps>;
   breakpoints: ReactTileLayout.Breakpoints;
   children: React.ReactNode;
@@ -70,7 +69,6 @@ const TileLayout = React.memo(
   ({
     initialLayout,
     onChangeLayout,
-    onSaveLayout,
     tileComponent,
     breakpoints: initialBreakpoints,
     isResizable = true,
