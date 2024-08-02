@@ -1,71 +1,72 @@
 import React from "react";
-import "./App.css";
+
 import { Tile, TileLayout } from "./components";
-import "react-resizable/css/styles.css";
-import "react-grid-layout/css/styles.css";
 import { ReactTileLayout } from "./components/types";
+
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 
 const breakpoints = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 };
 const cols = { lg: 12, md: 10, sm: 8, xs: 6, xxs: 4 };
 
 function App() {
-  const [isDisabled, setDisabled] = React.useState(false);
-
   return (
-    <div className="App">
-      <header>
-        Edit <strong>src/App.tsx</strong> to start testing your components!
-      </header>
-
-      <section>
-        <b>Put your components here:</b>
-        <br />
-        <br />
-        <button
-          onClick={() => {
-            setDisabled((prev) => !prev);
-          }}
-        >
-          test2 disabled [{isDisabled ? "x" : "_"}]
-        </button>
-        👇🏻
-        <TileLayout
-          className="layout"
-          tileComponent={SomeComponent}
-          breakpoints={breakpoints}
-          cols={cols}
-          rowHeight={60}
-        >
-          <Tile name="test1" layout={{ w: 1, h: 1 }} />
-          <Tile name="test2" layout={{ w: 1, h: 1 }} />
-          <Tile name="test3" layout={{ w: 1, h: 1 }} />
-          <Tile name="test4" layout={{ w: 1, h: 1 }} />
-          <Tile name="test5" layout={{ w: 1, h: 1 }} />
-          <Tile name="test6" layout={{ w: 1, h: 1 }} />
-        </TileLayout>
-      </section>
-    </div>
+    <TileLayout
+      style={{ border: "1px dashed gray" }}
+      tileComponent={TileComponent}
+      breakpoints={breakpoints}
+      cols={cols}
+      rowHeight={60}
+    >
+      {/*
+        Tiles can be rendered in any depth inside of <TileLayout>, as they use React's context API.
+        However, the order is determined by the order in which the <Tile> components were rendered.
+      */}
+      <Tile name="Tile 1" layout={{ w: 2, h: 1, static: true }} />
+      <Tile name="Tile 2" layout={{ w: 2, h: 2, minW: 1, maxW: 2 }} />
+      <Tile name="Tile 3" layout={{ w: 1, h: 1 }} someProp="Hello" />
+      {/*
+        You can temporarily remove specific tiles based on your own logic by using the disabled prop.
+        The tile's layout configuration and order is being preserved as long as the <Tile> component
+        itself is not unmounted.
+        However, React-Grid-Layout uses a mechanism to automatically compact the layout, which may
+        result in unexpected placement changes.
+       */}
+      <Tile name="Tile 4" layout={{ w: 1, h: 1 }} disabled />
+    </TileLayout>
   );
 }
 
-export default App;
-
-const SomeComponent = React.forwardRef(
+const TileComponent = React.forwardRef(
   (
     {
       name,
       layoutSpec,
+      someProp,
       children,
       ...props
-    }: ReactTileLayout.TileComponentProps,
+    }: ReactTileLayout.TileComponentProps & {
+      someProp?: string;
+    },
     ref: React.Ref<HTMLDivElement>
   ) => {
     return (
-      <div {...props} ref={ref}>
-        {name}
-        <br />
+      <div
+        {...props}
+        style={{
+          ...props.style,
+          border:
+            layoutSpec.static || layoutSpec.isDraggable === false
+              ? "1px solid blue"
+              : "1px solid red",
+        }}
+        ref={ref}
+      >
         {children}
+        {name} - {someProp || "default"}
       </div>
     );
   }
 );
+
+export default App;
